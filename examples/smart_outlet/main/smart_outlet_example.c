@@ -97,7 +97,9 @@ void publish_telemetry_event(iotc_context_handle_t context_handle,
     char *publish_topic = NULL;
     asprintf(&publish_topic, PUBLISH_TOPIC_EVENT, CONFIG_GIOT_DEVICE_ID);
     char *publish_message = NULL;
-    asprintf(&publish_message, TEMPERATURE_DATA, MIN_TEMP + rand() % 10);
+    time_t now = 0;
+    time(&now);
+    asprintf(&publish_message, "{\"bpm\" : %d,\"temperature\" : %d,\"timestamp\" : %ld}", 10 + rand() % 10, 25 + rand() % 10, now);
     ESP_LOGI(TAG, "publishing msg \"%s\" to topic: \"%s\"", publish_message, publish_topic);
 
     iotc_publish(context_handle, publish_topic, publish_message,
